@@ -1,7 +1,7 @@
 const jose = require('node-jose');
 
 async function jweEncrypt(alg, contentKeyEncMethod, publicKey, payload) {
-  const key = await jose.JWK.asKey(publicKey, 'key');
+  const key = await jose.JWK.asKey(publicKey, 'pem');
   const payloadString = JSON.stringify(payload); // Convert object to JSON string
   const encrypted = await jose.JWE.createEncrypt({ format: 'compact' }, key)
     .update(payloadString) // Use the JSON string as payload
