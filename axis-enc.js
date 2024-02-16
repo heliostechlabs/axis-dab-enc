@@ -166,11 +166,11 @@ Zc2Iv71CjPzaJR5WcM8EPL2H
 
 const payloadToEncryptAndSign = {
     "Data": {
-      "userName": "alwebuser",
-      "password": "acid_qa"
+        "userName": "admin",
+        "password": "Axis@1234"
     },
-    "Risks": {}
-  };
+    "Risk": {}
+};
 
 jweEncryptAndSign(publicKeyToEncrypt, privateKeyToSign, payloadToEncryptAndSign)
   .then(signedResult => {
