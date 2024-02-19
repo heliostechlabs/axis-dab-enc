@@ -41,13 +41,13 @@ async function jweEncryptAndSign(publicKeyToEncrypt, privateKeyToSign, payloadTo
 }
 
 async function jweVerifyAndDecrypt(publicKeyToVerify, privateKeyToDecrypt, payloadToVerifyAndDecrypt) {
-    const verifiedPayload = await jwsVerify(publicKeyToVerify, payloadToVerifyAndDecrypt);
-  
     try {
-      // Parse the JWS payload to get the encrypted JWE payload
-      const jwsObject = jose.JWS.parse(verifiedPayload);
-      const encryptedPayload = jwsObject.payload;
-  
+      // Verify the signature first
+      const verifiedPayload = await jwsVerify(publicKeyToVerify, payloadToVerifyAndDecrypt);
+
+      // Parse the verified payload to get the encrypted JWE payload
+      const encryptedPayload = JSON.parse(verifiedPayload).payload;
+
       // Decrypt the JWE payload
       const decryptedResult = await jweDecrypt(privateKeyToDecrypt, encryptedPayload);
       return decryptedResult;
@@ -56,7 +56,7 @@ async function jweVerifyAndDecrypt(publicKeyToVerify, privateKeyToDecrypt, paylo
       console.error('Decryption error:', error);
       return null;
     }
-  }
+}
   
 
 // Example usage
